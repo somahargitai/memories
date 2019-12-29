@@ -49,21 +49,8 @@ const useStyles = makeStyles(theme => ({
 const People = () => {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
-
-  const [openItem, setOpenItem] = useState(0);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-
-  const handleItemClick = id => {
-    console.log(id);
-    setOpenItem(1);
-  };
-
   const [{ data, loading, error, response }, refetch] = useAxios(
-    'http://localhost:5001/userlist',
+    'http://localhost:5001/peoplelist',
   );
 
   const createPanelItem = item => {

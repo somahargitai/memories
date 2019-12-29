@@ -2,16 +2,15 @@ import { logger } from '../logger/winstonLogger';
 import People from '../models/People';
 
 const people = (req, res) => {
-  logger.info('userlist');
+  logger.debug('people api');
    People.find()
-     .then(users => {
-       console.log(users);
-       logger.verbose(JSON.stringify(users, null, 2));
-       res.json(users);
+     .then(peoplefound => {
+       logger.verbose(JSON.stringify(peoplefound, null, 2));
+       res.json(peoplefound);
      })
      .catch(err => res.status(404)
      .json({
-       nopostfound: "No posts found with that ID"
+       nopostfound: "No people found with that ID"
      }));
 };
 
