@@ -1,0 +1,45 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "start.js",
+  "scripts": {
+    "start": "cross-env LOGLEVEL=silly node start.js",
+    "watch": "cross-env LOGLEVEL=info nodemon start.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hargitai Soma",
+  "license": "MIT",
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env:": {
+      "NODE_ENV": "dev"
+    }
+  },
+  "dependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/node": "^7.7.7",
+    "@babel/polyfill": "^7.7.0",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/register": "^7.7.7",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.8.3",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "cross-env": "^6.0.3"
+  }
+}
