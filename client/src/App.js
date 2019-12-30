@@ -3,25 +3,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 
-import Navbar from './components/layout/Navbar.js';
+import Navi from './components/layout/Navi.js';
 import People from './components/add/Person.js';
 
 const Home = () => (
   <div>
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        E <code>s</code>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {' '}
-          link{' '}
-        </a>
-      </p>
     </header>
   </div>
 );
@@ -29,8 +17,8 @@ const Home = () => (
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Navbar />
+      <div className="App"> 
+        <Navi />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/people" component={People} />

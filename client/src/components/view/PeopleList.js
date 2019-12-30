@@ -1,16 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import useAxios from 'axios-hooks';
-// import '../../App.css';
 import './People.css';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  List,
-  ListItem,
-  ListItemIcon,
-  Collapse,
-  ListItemText,
-  ListSubheader,
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
@@ -21,20 +14,13 @@ import {
   TableContainer,
   TableRow,
   TableBody,
-  TableHead,
 } from '@material-ui/core/';
 
-
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    margin: '0 auto',
     flexDirection: 'column',
     width: '100%',
     maxWidth: 360,
