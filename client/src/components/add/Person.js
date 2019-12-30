@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import 'date-fns';
 import useAxios from 'axios-hooks';
+import {useForm} from 'react-hook-form';
 import PeopleList from '../view/PeopleList';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -58,6 +59,9 @@ const useStyles = makeStyles(theme => ({
 export const Person = () => {
   const classes = useStyles();
 
+  const { register, handleSubmit, errors, reset } = useForm();
+  const onSubmit = data => console.log("onSubmit data", data);
+
   const [value, setValue] = useState('Controlled');
 
   const [selectedBirthDate, setSelectedBirthDate] = useState(null);
@@ -96,6 +100,7 @@ export const Person = () => {
   };
 
   const uploadPerson = () => {
+    console.log('ABABABABABABABA');
     executePost({
       data: {
         ...uploadThis,
@@ -109,12 +114,18 @@ export const Person = () => {
       <Grid container spacing={3}>
         <Grid className={classes.ingrid} item xs={12}>
           <Paper className={classes.inputpaper} elevation={3}>
-            <form className={classes.root} noValidate autoComplete="off">
+            <form  onSubmit={handleSubmit(uploadPerson)} className={classes.root} noValidate autoComplete="off">
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <div>
                   <Grid container spacing={3}>
                     <Grid item xs={8}>
-                      <TextField fullWidth id="standard-basic" label="Név" />
+                      <TextField
+                      ref={register}
+                      name="name"
+                        fullWidth
+                        id="standard-basic"
+                        label="Név"
+                      />
                       <TextField
                         fullWidth
                         id="standard-basic"
@@ -170,7 +181,11 @@ export const Person = () => {
                 </div>
               </MuiPickersUtilsProvider>
             </form>
-            <Button onClick={uploadPerson} className={classes.sendbutton} variant="contained"> Feltöltés </Button>
+            <Button 
+            type="submit"
+            label="Submit"
+            
+            className={classes.sendbutton} variant="contained"> Feltöltés </Button>
           </Paper>
           <Paper className={classes.inputpaper} elevation={3}>
           <PeopleList />

@@ -41,7 +41,7 @@ const People = () => {
 
   const createPanelItem = item => {
     return(
-      <ExpansionPanel key={item.id}>
+      <ExpansionPanel key={item._id}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
@@ -53,7 +53,7 @@ const People = () => {
           <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
             <TableBody>
-              <TableRow key={item.name}>
+              <TableRow>
                 <TableCell component="th" scope="row">
                   Nick
                 </TableCell>
@@ -61,7 +61,7 @@ const People = () => {
                   {item.nick}
                 </TableCell>
               </TableRow>
-              <TableRow key={item.name}>
+              <TableRow>
                 <TableCell component="th" scope="row">
                   Születetés ideje
                 </TableCell>
@@ -69,7 +69,7 @@ const People = () => {
                   {item.birth}
                 </TableCell>
               </TableRow>
-              <TableRow key={item.name}>
+              <TableRow>
                 <TableCell component="th" scope="row">
                   Születetés helye
                 </TableCell>
@@ -77,7 +77,7 @@ const People = () => {
                   {item.birthPlace}
                 </TableCell>
               </TableRow>
-              <TableRow key={item.name}>
+              <TableRow>
                 <TableCell component="th" scope="row">
                   e-mail
                 </TableCell>
