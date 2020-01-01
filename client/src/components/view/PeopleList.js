@@ -1,6 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import useAxios from 'axios-hooks';
 import './People.css';
+import Moment from 'react-moment';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -40,7 +41,7 @@ const People = () => {
   );
 
   const createPanelItem = item => {
-    return(
+    return (
       <ExpansionPanel key={item._id}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
@@ -51,83 +52,92 @@ const People = () => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableBody>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  Nick
-                </TableCell>
-                <TableCell align="right">
-                  {item.nick}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  Születetés ideje
-                </TableCell>
-                <TableCell align="right">
-                  {item.birth}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  Születetés helye
-                </TableCell>
-                <TableCell align="right">
-                  {item.birthPlace}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  e-mail
-                </TableCell>
-                <TableCell align="right">
-                  {item.email}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-
+            <Table className={classes.table} aria-label="simple table">
+              <TableBody>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    Nick
+                  </TableCell>
+                  <TableCell align="right">{item.nick}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    Születetés ideje
+                  </TableCell>
+                  <TableCell align="right">
+                    <Moment format="YYYY/MM/DD">{item.birthDate}</Moment>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    Születetés helye
+                  </TableCell>
+                  <TableCell align="right">{item.birthPlace}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    Halál ideje
+                  </TableCell>
+                  <TableCell align="right">
+                    <Moment format="YYYY/MM/DD">{item.deathDate}</Moment>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    Halál helye
+                  </TableCell>
+                  <TableCell align="right">{item.birthPlace}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );
-  }
+  };
 
   const createPanel = listItems => {
     return listItems.map(createPanelItem);
   };
 
-  if (loading) { return <p>Loading...</p>; }
-  if (error) { return <p>Error!</p>; }
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+  if (error) {
+    return <p>Error!</p>;
+  }
 
+  // Unused now, TBD as visible when no data
   const createEmpty = (loading, error) => {
-    if(loading || error ) {
-      return(
-
+    if (loading || error) {
+      return (
         <ExpansionPanel disabled>
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel3a-content"
             id="panel3a-header"
           >
-            <Typography className={classes.heading}>Disabled Expansion Panel 1</Typography>
+            <Typography className={classes.heading}>
+              Disabled Expansion Panel 1
+            </Typography>
           </ExpansionPanelSummary>
-      </ExpansionPanel>
+        </ExpansionPanel>
       );
     }
-    return(
+    return (
       <ExpansionPanel disabled>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3a-content"
           id="panel3a-header"
         >
-          <Typography className={classes.heading}>Disabled Expansion Pane 2l</Typography>
+          <Typography className={classes.heading}>
+            Disabled Expansion Pane 2l
+          </Typography>
         </ExpansionPanelSummary>
       </ExpansionPanel>
     );
-  }
+  };
 
   return (
     <div className={classes.root}>

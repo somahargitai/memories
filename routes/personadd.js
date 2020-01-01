@@ -1,43 +1,49 @@
-
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const keys = require("../config/keys");
-const passport = require("passport");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const keys = require('../config/keys');
+const passport = require('passport');
 import People from '../models/People';
 
 const refresh = (req, res) => {
+  console.log('SABADAAAAAAAAAAAAAAAAAAAAAAAA');
+  console.log(req.body.nick);
+  console.log(req.body.name);
+
+  const errors = {};
+
   /* const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) {
     return res.status(400).json(errors);
   } */
 
-  People.findOne({ name: "Hargitai Soma" }).then(user => {
+  People.findOne({
+    name: req.body.name,
+    nick: req.body.nick,
+  }).then(user => {
     if (user) {
-      errors.email = "already exists";
+      errors.message = 'already exists';
       return res.status(400).json(errors);
-      //  return res
-      // .status(400)
-      // .json({ email: 'Email already exists' });
     } else {
       console.log('HERE =====');
       console.log(req.body);
       const newPeople = new People({
         name: req.body.name,
         nick: req.body.nick,
-        birth: req.body.birth,
-        birthPlace: req.body.birthPlace,
+        description: req.body.description,
         email: req.body.email,
+        birthDate: req.body.birthDate,
+        birthPlace: req.body.birthPlace,
+        deathDate: req.body.deathDate,
+        deathPlace: req.body.deathPlace,
       });
 
-      // 10 character generating, salt is
-
       newPeople
-            .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
+        .save()
+        .then(user => res.json(user))
+        .catch(err => console.log(err));
     }
   });
 };

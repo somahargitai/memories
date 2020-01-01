@@ -20,17 +20,25 @@ const PeopleSchema = new Schema({
     type: String,
     required: false
   },
+  description: {
+    type: String,
+    required: false,
+  },
   email: {
     type: String,
     required: false
   },
-  birth: {
-    type: String,
+  birthDate: {
+    type: Date,
     required: false
   },
   birthPlace: {
     type: String,
     required: false
+  },
+  deathDate:{
+    type: Date,
+    required: false,
   },
   timestamp: {
     type: Date,
@@ -40,4 +48,3 @@ const PeopleSchema = new Schema({
 
 const People =  mongoose.model('people', PeopleSchema);
 export default People;
-// module.exports = People = mongoose.model('people', PeopleSchema);

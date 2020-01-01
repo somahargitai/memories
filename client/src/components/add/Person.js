@@ -2,18 +2,11 @@ import React, { useState, Fragment } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import 'date-fns';
 import useAxios from 'axios-hooks';
-import {useForm} from 'react-hook-form';
-import PeopleList from '../view/PeopleList';
+import PeopleTable from '../view/PeopleTable';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Button,
-  Grid,
-  TextField,
-  Paper,
-} from '@material-ui/core/';
+import { Button, Grid, TextField, Paper } from '@material-ui/core/';
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
@@ -23,16 +16,11 @@ const useStyles = makeStyles(theme => ({
     width: 800,
     '& > *': {
       margin: theme.spacing(1),
-      //  width: 200,
     },
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      // width: 200,
     },
   },
-  // inputcontainer: {
-  //   width: '1600px',
-  // },
   ingrid: {
     marginTop: 20,
   },
@@ -40,7 +28,12 @@ const useStyles = makeStyles(theme => ({
     margin: '0 auto',
     width: 1000,
     marginTop: 20,
-    padding:20,
+    padding: 20,
+  },
+  datatable: {
+    margin: '0 auto',
+    width: 1200,
+    marginTop: 20,
   },
   form: {
     flexGrow: 1,
@@ -53,25 +46,19 @@ const useStyles = makeStyles(theme => ({
   },
   sendbutton: {
     marginBottom: 20,
-  }
+  },
 }));
 
 export const Person = () => {
   const classes = useStyles();
-
-  const { register, handleSubmit, errors, reset } = useForm();
-  const onSubmit = data => console.log("onSubmit data", data);
-
-  const [value, setValue] = useState('Controlled');
-
-  const [selectedBirthDate, setSelectedBirthDate] = useState(null);
-  const [selectedDeathDate, setSelectedDeathDate] = useState(
-    new Date('2014-08-18T21:11:54'),
-  );
-
-  const handleChange = event => {
-    setValue(event.target.value);
-  };
+  const [name, setName] = useState('');
+  const [nick, setNick] = useState('');
+  const [email, setEmail] = useState('');
+  const [description, setDescription] = useState('');
+  const [birthPlace, setBirthPlace] = useState('');
+  const [deathPlace, setDeathPlace] = useState('');
+  const [birthDate, setSelectedBirthDate] = useState(null);
+  const [deathDate, setSelectedDeathDate] = useState(null);
 
   const handleBirthDateChange = date => {
     setSelectedBirthDate(date);
@@ -91,47 +78,50 @@ export const Person = () => {
     { manual: true },
   );
 
-  const uploadThis = {
-    name: 'Kogutowicz Peter',
-    nick: 'Manó',
-    birth: '1988-08-08',
-    birthPlace: 'Budapest',
-    email: 'mano@mano.com',
-  };
-
-  const uploadPerson = () => {
-    console.log('ABABABABABABABA');
+  const uploadPerson = event => {
+    event.preventDefault();
     executePost({
       data: {
-        ...uploadThis,
+        name: name,
+        nick: nick,
+        email: email,
+        description: description,
+        birthDate: birthDate,
+        deathDate: deathDate,
+        birthPlace: birthPlace,
+        deathPlace: deathPlace,
         updatedAt: new Date().toISOString(),
       },
     });
   };
-  // // className={classes.form}>
+
   return (
     <Fragment>
       <Grid container spacing={3}>
         <Grid className={classes.ingrid} item xs={12}>
           <Paper className={classes.inputpaper} elevation={3}>
-            <form  onSubmit={handleSubmit(uploadPerson)} className={classes.root} noValidate autoComplete="off">
+            <form className={classes.root} noValidate autoComplete="off">
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <div>
                   <Grid container spacing={3}>
                     <Grid item xs={8}>
                       <TextField
-                      ref={register}
-                      name="name"
+                        onChange={e => setName(e.target.value)}
+                        name="name"
                         fullWidth
                         id="standard-basic"
                         label="Név"
                       />
                       <TextField
+                        onChange={e => setNick(e.target.value)}
+                        name="nick"
                         fullWidth
                         id="standard-basic"
                         label="Becenév"
                       />
                       <TextField
+                        name="description"
+                        onChange={e => setDescription(e.target.value)}
                         fullWidth
                         id="outlined-multiline-static"
                         label="Leírás"
@@ -143,35 +133,38 @@ export const Person = () => {
                     </Grid>
                     <Grid item xs={4}>
                       <TextField
+                        onChange={e => setBirthPlace(e.target.value)}
+                        name="bornlocation"
                         fullWidth
                         id="standard-basic"
                         label="Születés helye"
                       />
                       <KeyboardDatePicker
+                        onChange={handleBirthDateChange}
                         fullWidth
                         margin="normal"
                         id="date-picker-dialog"
                         label="Születés ideje"
                         format="yyyy/MM/dd"
-                        value={selectedDeathDate}
-                        onChange={handleDeathDateChange}
+                        value={birthDate}
                         KeyboardButtonProps={{
                           'aria-label': 'change date',
                         }}
                       />
                       <TextField
+                        onChange={e => setDeathPlace(e.target.value)}
                         fullWidth
                         id="standard-basic"
                         label="Halál helye"
                       />
                       <KeyboardDatePicker
+                        onChange={handleDeathDateChange}
                         fullWidth
                         margin="normal"
                         id="date-picker-dialog"
                         label="Halál ideje"
                         format="yyyy/MM/dd"
-                        value={selectedBirthDate}
-                        onChange={handleBirthDateChange}
+                        value={deathDate}
                         KeyboardButtonProps={{
                           'aria-label': 'change date',
                         }}
@@ -180,15 +173,19 @@ export const Person = () => {
                   </Grid>
                 </div>
               </MuiPickersUtilsProvider>
+              <Button
+                onClick={uploadPerson}
+                type="submit"
+                label="Submit"
+                className={classes.sendbutton}
+                variant="contained"
+              >
+                Feltöltés
+              </Button>
             </form>
-            <Button 
-            type="submit"
-            label="Submit"
-            
-            className={classes.sendbutton} variant="contained"> Feltöltés </Button>
           </Paper>
-          <Paper className={classes.inputpaper} elevation={3}>
-          <PeopleList />
+          <Paper key="tableeee" className={classes.datatable} elevation={3}>
+            <PeopleTable />
           </Paper>
         </Grid>
       </Grid>
