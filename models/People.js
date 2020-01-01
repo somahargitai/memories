@@ -36,6 +36,10 @@ const PeopleSchema = new Schema({
     type: String,
     required: false
   },
+  deathPlace: {
+    type: String,
+    required: false,
+  },
   deathDate:{
     type: Date,
     required: false,

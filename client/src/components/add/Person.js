@@ -79,7 +79,6 @@ export const Person = () => {
   );
 
   const uploadPerson = event => {
-    event.preventDefault();
     executePost({
       data: {
         name: name,
